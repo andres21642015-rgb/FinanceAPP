@@ -1,0 +1,30 @@
+package com.example.financeapp.data.model
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+/**
+ * entidad para gastos compartidos entre varias personas
+ */
+@Entity(tableName ="SharedExpense")
+data class SharedExpense(
+    @PrimaryKey(autoGenerate =true)
+    val id: Long =0,
+    val creatorUserId: Long,
+    val totalAmount: Double,
+    val description: String,
+    val category: ExpenseCategory,
+    val date: Long =System.currentTimeMillis(),
+    val participants : String,
+    val settled: Boolean =false
+)
+/**
+ * participant-clase de datos para representar un participante
+ *clase auxiliar para estructurar
+ */
+
+data class Participant(
+    val name: String,
+    val amount: Double,
+    val paid: Boolean =false
+)
