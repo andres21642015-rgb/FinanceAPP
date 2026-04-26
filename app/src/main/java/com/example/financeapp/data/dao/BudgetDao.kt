@@ -13,21 +13,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface BudgetDao {
 
-    /**
-     * Inserta un nuevo presupuesto en la base de datos.
-     */
+    // Inserta un presupuesto. Si ya existe uno con el mismo ID, lo reemplaza.
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(budget: Budget)
 
-    /**
-     * Obtiene todos los presupuestos de un usuario en un mes y año específico.
-     */
+    // Obtiene todos los presupuestos de un usuario para un mes y año específicos.
     @Query("SELECT * FROM budgets WHERE userId = :userId AND month = :month AND year = :year")
     fun getBudgetsByMonthYear(userId: Long, month: Int, year: Int): Flow<List<Budget>>
 
-    /**
-     * Obtiene un presupuesto específico por usuario, categoría, mes y año.
-     */
+    // Obtiene un único presupuesto filtrado por usuario, categoría, mes y año.
+    // Usa LIMIT 1 para evitar múltiples resultados.
     @Query("""
         SELECT * FROM budgets 
         WHERE userId = :userId
@@ -36,22 +31,18 @@ interface BudgetDao {
         AND year = :year 
         LIMIT 1
     """)
-    suspend fun getBudgetByCategoryMonthYear(
+    fun getBudgetByCategoryMonthYear(
         userId: Long,
         category: ExpenseCategory,
         month: Int,
         year: Int
-    ): Budget?
+    ): Flow<Budget?>
 
-    /**
-     * Actualiza un presupuesto existente.
-     */
+    // Actualiza un presupuesto existente en la base de datos.
     @Update
     suspend fun update(budget: Budget)
 
-    /**
-     * Elimina un presupuesto de la base de datos.
-     */
+    // Elimina un presupuesto de la base de datos.
     @Delete
     suspend fun delete(budget: Budget)
 }
