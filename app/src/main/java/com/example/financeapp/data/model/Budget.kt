@@ -14,8 +14,8 @@ data class Budget(
     val id: Long = 0,
     val userId:Long,
     val category: ExpenseCategory,
-    val montlyLimit: Double,
-    val mounth: Int,
+    val monthlyLimit: Double,
+    val month: Int,
     val year: Int,
     val createAt:Long =System.currentTimeMillis()
 )
