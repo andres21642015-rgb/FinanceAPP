@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 /**
  * entidad para gastos compartidos entre varias personas
  */
-@Entity(tableName ="SharedExpense")
+@Entity(tableName ="shared_expenses")
 data class SharedExpense(
     @PrimaryKey(autoGenerate =true)
     val id: Long =0,
